@@ -185,6 +185,7 @@ const start = async (opts) => {
     transform: null,
     split: null,
     slow: false,
+    filter: null,
     databaseType: 'sqlite'
   }
   opts = Object.assign(defaults, opts)
@@ -199,7 +200,7 @@ const start = async (opts) => {
   debug('Getting last change from CouchDB')
   const req = {
     baseURL: opts.url,
-    url: opts.database + '/_changes',
+    url: opts.filter ? opts.database + '/_changes' + '?filter=' + opts.filter : opts.database + '/_changes',
     params: {
       since: 'now',
       limit: 1
