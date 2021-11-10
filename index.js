@@ -2,7 +2,6 @@ const path = require('path')
 const ChangesReader = require('changesreader')
 const schema = require('./lib/schema.js')
 const ProgressBar = require('progress')
-const debug = require('debug')('couchwarehouse')
 const util = require('./lib/util.js')
 const axios = require('axios').default
 let cr
@@ -57,10 +56,10 @@ const transformAndDiscoverSchema = (b, opts, theSchema) => {
       doc = JSON.parse(JSON.stringify(doc))
 
       // discover the schema
-      debug('Calculating the schema for ' + docType)
+      console.log('Calculating the schema for ' + docType)
       const s = schema.discover(doc)
       theSchema[docType] = s
-      debug('schema', JSON.stringify(s))
+      console.log('schema', JSON.stringify(s))
 
       // display this schema if generateSchemas is set to true
       if (opts.generateSchemas) {
@@ -69,7 +68,7 @@ const transformAndDiscoverSchema = (b, opts, theSchema) => {
       }
 
       // create the database
-      debug('Calculating Create SQL for ' + docType)
+      console.log('Calculating Create SQL for ' + docType)
       createSQL = createSQL.concat(sqldb.generateCreateTableSQL(opts, docType, opts.database, s, opts.reset))
     }
   }
@@ -204,7 +203,7 @@ const start = async (opts) => {
 
   // get latest revision token of the target database, to
   // give us something to aim for
-  debug('Getting last change from CouchDB')
+  console.log('Getting last change from CouchDB')
   const req = {
     baseURL: opts.url,
     url: opts.filter ? opts.database + '/_changes' + '?filter=' + opts.filter : opts.database + '/_changes',
@@ -221,7 +220,7 @@ const start = async (opts) => {
   if (opts.databaseType !== 'sqlite') {
     opts.slow = true
   }
-  debug('Initalise database')
+  console.log('Initalise database')
   loadDatabaseDriver(opts)
   await sqldb.initialise(opts.reset)
 
@@ -232,7 +231,7 @@ const start = async (opts) => {
   }
 
   // spool changes
-  debug('Spooling changes')
+  console.log('Spooling changes')
   if (opts.verbose) {
     opts.usableDbName = util.calculateUsableDbName(opts, opts.database, null)
     sqldb.message(opts)
