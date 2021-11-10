@@ -62,6 +62,12 @@ const transformAndDiscoverSchema = (b, opts, theSchema) => {
       theSchema[docType] = s
       debug('schema', JSON.stringify(s))
 
+      // display this schema if generateSchemas is set to true
+      if (opts.generateSchemas) {
+        console.log('Display schema for', docType)
+        console.log(docType + ':', theSchema[docType])
+      }
+
       // create the database
       debug('Calculating Create SQL for ' + docType)
       createSQL = createSQL.concat(sqldb.generateCreateTableSQL(opts, docType, opts.database, s, opts.reset))
@@ -186,7 +192,8 @@ const start = async (opts) => {
     split: null,
     slow: false,
     filter: null,
-    databaseType: 'sqlite'
+    databaseType: 'sqlite',
+    generateSchemas: false
   }
   opts = Object.assign(defaults, opts)
 

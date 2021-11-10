@@ -158,6 +158,7 @@ $  curl 'http://localhost:9200/couchwarehouse/_search?q=name:"York"'
 - `--transform`/`-t` - transform each document with a supplied JavaScript function (default: null)
 - `--split`/`-s` - split a database into multiple tables on this field (default: null)
 - `--version` - show version number
+- `--generateSchemas` - generate schemas that you can copy add to the schemas
 - `--help` - show help
 
 The CouchDB URL can also be specified with the `COUCH_URL` environment variable e.g.

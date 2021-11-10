@@ -12,6 +12,7 @@ const args = require('yargs')
   .option('transform', { alias: 't', describe: 'Path to a JavaScript transformation function', default: process.env.COUCH_TRANSFORM ? process.env.COUCH_TRANSFORM : null })
   .option('split', { alias: 's', describe: 'Document field name used to split documents into separate tables', default: null })
   .option('filter', { alias: 'f', describe: 'Document field name used to filter the contents of the changes feed', default: null })
+  .option('generateSchemas', { alias: 'g', describe: 'Generate schemas that you can copy add to the schemas', default: false })
   .help('help')
   .argv
 
