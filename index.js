@@ -36,6 +36,14 @@ const transformAndDiscoverSchema = (b, opts, theSchema) => {
   // array of SQL statements
   let createSQL = []
 
+  // use preset schemas if these have been set
+  if (opts.schemas) {
+    for (const key in opts.schemas) {
+      theSchema[key] = opts.schemas[key];
+      createSQL = createSQL.concat(sqldb.generateCreateTableSQL(opts, key, opts.database, theSchema[key], opts.reset))
+    }
+  }
+
   // for each document in the batch
   for (const i in b) {
     // the document we're working with
@@ -192,6 +200,7 @@ const start = async (opts) => {
     slow: false,
     filter: null,
     databaseType: 'sqlite',
+    schemas: null,
     generateSchemas: false
   }
   opts = Object.assign(defaults, opts)

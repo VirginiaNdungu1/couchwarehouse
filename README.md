@@ -336,6 +336,22 @@ The `opts` object passed to `couchwarehouse.start` can contain:
 - `verbose` - whether to show progress on the terminal (default: true)
 - `reset` - reset the data. Delete existing data and start from scratch (default: false)
 - `split` - the attribute to use to split documents into separate tables (default: splitting disabled)
+- `schemas` - a set of preset schemas to use for different document types
+e.g. add preset schemas for patient and facility
+```js
+schemas = {
+  'patient': {
+    "id": "string",
+    "name": "string",
+    "phone": "number"
+  },
+  'facility': {
+    "id": "string",
+    "name": "string",
+    "code": "number"
+  }
+};
+```
 
 ## Debugging
 
