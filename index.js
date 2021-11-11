@@ -41,6 +41,12 @@ const transformAndDiscoverSchema = (b, opts, theSchema) => {
     for (const key in opts.schemas) {
       theSchema[key] = opts.schemas[key];
       createSQL = createSQL.concat(sqldb.generateCreateTableSQL(opts, key, opts.database, theSchema[key], opts.reset))
+
+      // create answers table
+      if (key === 'answersheet') {
+        console.log('Calculating Create SQL for answers table')
+        createSQL = createSQL.concat(sqldb.generateCreateTableSQL(opts, 'answer', opts.database, theSchema['answer'], opts.reset))
+      }
     }
   }
 
